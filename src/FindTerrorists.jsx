@@ -364,17 +364,24 @@ export default function findTerrorists() {
 
       } else if (terrorist.attacksCount===name ) {
         return true
-      }else if(name==="active" && terrorist.status==="active"){
-        return true
-      }else if(name==="quiet" && terrorist.status==="quiet"){
-        return true
-      }else if(name==="dead"&& terrorist.status==="dead"){
-        return true
-      }
-      else if(name==="agent"&& terrorist.status==="agent"){
-        return true
       }
     }));
+  }
+  function filterT(filed){
+    setFindT(findT.filter((terrorist)=>{
+        if(filed==="active" && terrorist.status==="active"){
+            return true
+        }
+        else if(filed==="quiet" && terrorist.status==="quiet"){
+            return true
+        }
+        else if(filed==="dead"&& terrorist.status==="dead"){
+            return true
+        }
+        else if(filed==="agent"&& terrorist.status==="agent"){
+            return true
+        }
+    }))
   }
   function refreshPage(){ 
     window.location.reload(); 
@@ -399,15 +406,22 @@ function mostDangerous(){
 
   return (
     <div>
+        <div className="flex justify-center gap-1.5"> 
       <input
         type="text"
         onChange={(e) => find(e.target.value)}
-        className="border p-5 rounded-full"
-        placeholder="find/filter "
+        className="border p-5 rounded-md"
+        placeholder="find by name/number "
       />
-      <button className="border p-5 m-1 rounded-full bg-amber-400 hover:bg-amber-200 cursor-pointer" onClick={refreshPage}>Refres</button>
-      <button className="border p-5 m-1 rounded-full bg-red-400 hover:bg-red-200 cursor-pointer" onClick={mostDangerous}>find the  Most Dangerous Terrorist </button>
-
+        <input
+        type="text"
+        onChange={(e) => filterT(e.target.value)}
+        className="border p-5 rounded-md"
+        placeholder="filter by status"
+      />
+      <button className="border p-5  rounded-md bg-amber-400 hover:bg-amber-200 cursor-pointer " onClick={refreshPage}>Refres</button>
+      <button className="border p-2  rounded-md bg-red-400 hover:bg-red-200 cursor-pointer flex" onClick={mostDangerous}>find the  Most Dangerous Terrorist </button>
+</div>
 
       <table>
         <tr>
@@ -434,6 +448,9 @@ function mostDangerous(){
           );
         })}
       </table>
+
+
+     
     </div>
   );
 }
